@@ -1,0 +1,81 @@
+!horiz_padding = 15px
+!header_height = 50px
+!info_width = 150px
+!sitenav_height = 49px
+!content_width = 700px
+
+body
+  font-family: arial
+  margin: 0
+
+a
+  color: #cc0a00
+  text-decoration: none
+
+  &:hover
+    text-decoration: underline
+
+  img
+    border: 0
+
+big
+  font-weight: bold
+  font-size: 32px
+
+#header
+  background-color: black
+  padding = "20px" !horiz_padding
+  height = !header_height 
+  color: white
+
+  #logo
+    height = !header_height
+    line-height = !header_height
+
+  #irc
+    position: absolute
+    z-index: 9999
+    right = !horiz_padding
+    top: 20px
+
+  #info
+    float: left
+    width = !info_width
+    text-align: center
+
+#sitenav
+  margin: 0
+  width: 100%
+  height = !sitenav_height
+  line-height = !sitenav_height
+  background: #e6e6e6 url('/images/site-nav-bg.gif') repeat-x center left
+  border-top: 2px solid #eee
+  border-bottom: 2px solid #ddd
+
+  a
+    color: black
+
+  ul
+    display: inline
+    padding: 0
+    
+    li
+      display: inline
+      list-style: none
+      padding: 5px 15px
+
+#content
+  padding-left = !horiz_padding
+  padding-right = !horiz_padding
+  width = !content_width
+
+  h2, h3, h4, h5, h6
+    margin-bottom: 0
+
+  .meta
+    color: #aaa
+    margin-top: 0
+
+  .pagination
+    width: 100%
+    text-align: center

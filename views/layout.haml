@@ -1,0 +1,30 @@
+- title = "Linux Users Group Göteborg"
+
+!!! XML
+!!!
+%html
+  %head
+    %title= title
+    %link{ :rel => "stylesheet", :type => "text/css", :href => "/css/screen.css" }
+  %body
+    #header
+      #logo
+        %a{:href => "/"}
+          %img{:src => "/images/logo.png"}
+  
+      #irc
+        %a{:href => "irc://irc.freenode.org:6667/LUGG"}
+          %img{:src => "/images/irc.png"}
+
+    #sitenav
+      %ul
+        %li
+          %a{:href => "/"} Bloggar
+        %li
+          %a{:href => "/events"} Händelser
+        %li
+          %a{:href => "/about"} Information
+          
+    #content
+      = yield
+    

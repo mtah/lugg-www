@@ -1,0 +1,11 @@
+%p= @page
+%p= @req
+- @feed_items.each do |item|
+  - date = item[:date].strftime("%Y-%m-%d %H:%M CET") 
+  .feed_item
+    %h2
+      %a{:href => item[:link]}= item[:title]
+    %p.meta= "Publicerad #{date} av #{item[:user_name]}" 
+    %p= strip_tags(item[:description], "img", "script")
+    
+= will_paginate(@feed_items, :page_links => false, :previous_label => "&laquo; Nyare", :next_label => "Äldre &raquo;")
