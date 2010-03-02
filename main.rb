@@ -5,8 +5,8 @@ require 'sass'
 require 'will_paginate'
 require 'will_paginate/collection'
 
-# Configure DataMapper to use the App Engine datastore 
-DataMapper.setup(:default, "appengine://auto")
+# Configure DataMapper to use the DB on Heroku 
+DataMapper.setup(:default, ENV['DATABASE_URL'])
 
 # Load all models
 Dir["models/*.rb"].each { |file| require file }

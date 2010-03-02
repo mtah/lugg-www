@@ -1,7 +1,6 @@
 require 'dm-core'
-require 'appengine-apis/memcache'
-require 'appengine-apis/urlfetch'
 require 'rss'
+require 'memcache'
 
 class EventSource
   include DataMapper::Resource
@@ -10,15 +9,15 @@ class EventSource
   property :feed_url, String
 
   def events
-    cache = AppEngine::Memcache.new(:namespace => "events")
-    events = cache.get(@id)
+    cache = MemCache.new(ENV['MEMCACHE_SERVERS'].split(','),
+                         ENV['MEMCACHE_NAMESPACE'])
+    events = cache.get("event_source_#{@id}")
 
     if events
       events
     else
-      rawfeed = AppEngine::URLFetch.fetch(@feed_url)
-      events = RSS::Parser.parse(rawfeed.body, false).items
-      cache.set(@id, events, 86400)
+      events = RSS::Parser.parse(@feed_url, false).items
+      cache.set("event_source_#{@id}", events, 86400)
       events
     end
   end

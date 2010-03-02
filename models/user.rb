@@ -1,7 +1,6 @@
 require 'dm-core'
-require 'appengine-apis/memcache'
-require 'appengine-apis/urlfetch'
 require 'rss'
+require 'memcache'
 
 class User
   include DataMapper::Resource
@@ -14,15 +13,15 @@ class User
   end
 
   def newest_feed_item
-    cache = AppEngine::Memcache.new(:namespace => "feed_items")
-    feed_item = cache.get(@id)
+    cache = MemCache.new(ENV['MEMCACHE_SERVERS'].split(','),
+                         ENV['MEMCACHE_NAMESPACE'])
+    feed_item = cache.get("user_#{@id}")
 
     if feed_item
       feed_item
     else
-      rawfeed = AppEngine::URLFetch.fetch(@feed_url)
-      feed_item = RSS::Parser.parse(rawfeed.body, false).items.first
-      cache.set(@id, feed_item, 3600)
+      feed_item = RSS::Parser.parse(@feed_url, false).items.first
+      cache.set("user_#{@id}", feed_item, 3600)
       feed_item
     end
   end
